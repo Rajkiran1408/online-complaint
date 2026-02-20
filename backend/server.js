@@ -12,11 +12,16 @@ connectDB();
 
 const app = express();
 
+// Enable CORS with specific options
+app.use(cors({
+    origin: '*', // For now allow all, or you can use your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true
+}));
+
 // Body parser
 app.use(express.json());
-
-// Enable CORS
-app.use(cors());
 
 // Serve uploaded files as static
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
