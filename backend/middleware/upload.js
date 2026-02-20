@@ -1,18 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 
-// Configure storage
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '..', 'uploads'));
-    },
-    filename: function (req, file, cb) {
-        // Create unique filename: userId-timestamp-originalname
-        const uniqueSuffix = `${req.user.id}-${Date.now()}`;
-        const ext = path.extname(file.originalname);
-        cb(null, `${uniqueSuffix}${ext}`);
-    }
-});
+// Configure storage to use memory instead of disk for Vercel/Serverless
+const storage = multer.memoryStorage();
 
 // File filter - only accept images
 const fileFilter = (req, file, cb) => {

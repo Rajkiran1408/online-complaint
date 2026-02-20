@@ -11,9 +11,10 @@ exports.submitComplaint = async (req, res, next) => {
     try {
         req.body.user = req.user.id;
 
-        // If a file was uploaded, build the URL path
+        // If a file was uploaded, convert it to Base64 (since Vercel disk is read-only)
         if (req.file) {
-            req.body.attachmentUrl = `/uploads/${req.file.filename}`;
+            const base64Image = req.file.buffer.toString('base64');
+            req.body.attachmentUrl = `data:${req.file.mimetype};base64,${base64Image}`;
         }
 
         const complaint = await Complaint.create(req.body);
@@ -197,9 +198,10 @@ exports.updateComplaintStatus = async (req, res, next) => {
         if (status === 'Resolved') {
             complaint.resolvedBy = req.user.id;
 
-            // If a resolution image was uploaded, store the path
+            // If a resolution image was uploaded, convert to Base64
             if (req.file) {
-                complaint.resolutionImageUrl = `/uploads/${req.file.filename}`;
+                const base64Image = req.file.buffer.toString('base64');
+                complaint.resolutionImageUrl = `data:${req.file.mimetype};base64,${base64Image}`;
             }
         }
 

@@ -151,12 +151,12 @@ const ComplaintDetails = () => {
                         {complaint.attachmentUrl && (
                             <div style={{ marginBottom: '2.5rem' }}>
                                 <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Attachment</h4>
-                                <a href={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}${complaint.attachmentUrl}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}
+                                <a href={complaint.attachmentUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}
                                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)'; }}
                                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
                                 >
                                     <img
-                                        src={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}${complaint.attachmentUrl}`}
+                                        src={complaint.attachmentUrl}
                                         alt="Complaint Evidence"
                                         style={{ width: '100%', maxHeight: '350px', objectFit: 'contain', display: 'block', background: 'rgba(0,0,0,0.05)' }}
                                     />
@@ -231,9 +231,9 @@ const ComplaintDetails = () => {
                                             {complaint.resolutionImageUrl && (
                                                 <div style={{ marginBottom: '2rem' }}>
                                                     <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Resolution Proof</h4>
-                                                    <a href={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}${complaint.resolutionImageUrl}`} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}>
+                                                    <a href={complaint.resolutionImageUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}>
                                                         <img
-                                                            src={`${import.meta.env.VITE_BASE_URL || 'http://localhost:5000'}${complaint.resolutionImageUrl}`}
+                                                            src={complaint.resolutionImageUrl}
                                                             alt="Resolution Evidence"
                                                             style={{ width: '100%', maxHeight: '250px', objectFit: 'contain', display: 'block', background: 'rgba(0,0,0,0.05)' }}
                                                         />
