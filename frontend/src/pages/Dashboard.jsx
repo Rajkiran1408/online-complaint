@@ -39,23 +39,47 @@ const Dashboard = () => {
     );
 
     return (
-        <div style={{ padding: '2rem' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem' }}>
+        <div className="dashboard-container" style={{ padding: 'responsive-padding' }}>
+            <header className="dashboard-header">
                 <div>
-                    <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.5rem' }}>Welcome, {user.name}</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>
+                    <h1 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 800, marginBottom: '0.5rem' }}>Welcome, {user.name}</h1>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                         {user.role === 'User' ? 'Manage your submitted grievances and track progress.' :
                             user.role === 'Admin' ? 'Administrator portal: Oversee and assign complaints.' :
                                 'Support portal: Resolve assigned grievances.'}
                     </p>
                 </div>
                 {user.role === 'User' && (
-                    <button onClick={() => navigate('/submit')} className="btn btn-primary">
+                    <button onClick={() => navigate('/submit')} className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
                         <Plus size={20} />
                         Submit New Complaint
                     </button>
                 )}
             </header>
+
+            <style>{`
+                .dashboard-container {
+                    padding: 2rem;
+                }
+                .dashboard-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    margin-bottom: 2.5rem;
+                }
+                @media (max-width: 768px) {
+                    .dashboard-container { padding: 1rem; }
+                    .dashboard-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 1.5rem;
+                    }
+                    .dashboard-header .btn {
+                        width: 100%;
+                    }
+                }
+            `}</style>
+
 
             {/* Stats Section */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
@@ -124,31 +148,79 @@ const Dashboard = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.05 }}
                             onClick={() => navigate(`/complaints/${complaint._id}`)}
-                            className="glass-morphism card"
-                            style={{ padding: '1.5rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2rem' }}
+                            className="glass-morphism card complaint-item"
+                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '2rem' }}
                         >
                             <div style={{ flex: 1 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                                <div className="complaint-item-header">
                                     <h3 style={{ fontSize: '1.125rem', fontWeight: 600 }}>{complaint.title}</h3>
                                     {getStatusBadge(complaint.status)}
                                 </div>
-                                <div style={{ display: 'flex', gap: '2rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                                    <span>Submitted on: {format(new Date(complaint.createdAt), 'PPP')}</span>
-                                    {complaint.assignedTo && <span>Assigned to: {complaint.assignedTo.name}</span>}
+                                <div className="complaint-item-footer">
+                                    <span>Submitted: {format(new Date(complaint.createdAt), 'PPP')}</span>
+                                    {complaint.assignedTo && <span>Assigned: {complaint.assignedTo.name}</span>}
                                 </div>
                             </div>
-                            <ChevronRight size={20} color="var(--text-muted)" />
+                            <ChevronRight size={20} color="var(--text-muted)" className="chevron-icon" />
                         </motion.div>
                     ))}
                 </div>
             )}
 
             <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+                .dashboard-container {
+                    padding: 2rem;
+                }
+                .dashboard-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    margin-bottom: 2.5rem;
+                }
+                .complaint-item {
+                    padding: 1.5rem;
+                }
+                .complaint-item-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    margin-bottom: 0.5rem;
+                }
+                .complaint-item-footer {
+                    display: flex;
+                    gap: 2rem;
+                    font-size: 0.85rem;
+                    color: var(--text-muted);
+                }
+
+                @media (max-width: 768px) {
+                    .dashboard-container { padding: 1rem; }
+                    .dashboard-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 1.5rem;
+                    }
+                    .dashboard-header .btn {
+                        width: 100%;
+                    }
+                    .complaint-item {
+                        gap: 1rem !important;
+                    }
+                    .complaint-item-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 0.5rem;
+                    }
+                    .complaint-item-footer {
+                        flex-direction: column;
+                        gap: 0.25rem;
+                    }
+                    .chevron-icon {
+                        display: none;
+                    }
+                }
+            `}</style>
+
         </div>
     );
 };

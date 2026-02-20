@@ -13,53 +13,135 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="glass-morphism" style={{
-            margin: '1rem',
-            padding: '0.75rem 2.5rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            position: 'sticky',
-            top: '1rem',
-            zIndex: 1000,
-            background: '#0f172a', /* Deep Slate */
-            color: '#ffffff',
-            border: 'none',
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-        }}>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#ffffff' }}>
-                <div className="premium-gradient" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                    <img src={logo2} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <nav className="navbar-container glass-morphism">
+            <Link to="/" className="navbar-logo">
+                <div className="premium-gradient logo-wrapper">
+                    <img src={logo2} alt="Logo" className="logo-img" />
                 </div>
-                <span style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '-0.5px' }}>Redressal System</span>
+                <span className="logo-text">Redressal System</span>
             </Link>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+            <div className="navbar-actions">
                 {user ? (
                     <>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.7)' }}>
+                        <div className="user-info">
                             <User size={18} />
-                            <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>{user.name} ({user.role})</span>
+                            <span className="user-name">{user.name} <span className="user-role">({user.role})</span></span>
                         </div>
-                        <button onClick={handleLogout} className="btn" style={{
-                            padding: '0.5rem 1rem',
-                            background: 'rgba(255,255,255,0.1)',
-                            color: '#ffffff',
-                            border: '1px solid rgba(255,255,255,0.2)'
-                        }}>
+                        <button onClick={handleLogout} className="btn logout-btn">
                             <LogOut size={18} />
-                            Logout
+                            <span className="logout-text">Logout</span>
                         </button>
                     </>
                 ) : (
                     <>
-                        <Link to="/login" className="btn" style={{ textDecoration: 'none', color: '#ffffff', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)' }}>Login</Link>
-                        <Link to="/register" className="btn btn-primary" style={{ textDecoration: 'none' }}>Register</Link>
+                        <Link to="/login" className="btn login-link">Login</Link>
+                        <Link to="/register" className="btn btn-primary register-link">Register</Link>
                     </>
                 )}
             </div>
+
+            <style>{`
+                .navbar-container {
+                    margin: 1rem;
+                    padding: 0.75rem 2.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    position: sticky;
+                    top: 1rem;
+                    z-index: 1000;
+                    background: #0f172a;
+                    color: #ffffff;
+                    border: none;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                    border-radius: 1rem;
+                }
+                .navbar-logo {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    text-decoration: none;
+                    color: #ffffff;
+                }
+                .logo-wrapper {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+                }
+                .logo-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .logo-text {
+                    fontSize: 1.25rem;
+                    font-weight: 700;
+                    letter-spacing: -0.5px;
+                }
+                .navbar-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+                }
+                .user-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    color: rgba(255,255,255,0.7);
+                }
+                .user-name {
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                }
+                .logout-btn {
+                    padding: 0.5rem 1rem;
+                    background: rgba(255,255,255,0.1);
+                    color: #ffffff;
+                    border: 1px solid rgba(255,255,255,0.2) !important;
+                    width: auto !important;
+                }
+                .login-link {
+                    text-decoration: none;
+                    color: #ffffff;
+                    background: transparent;
+                    border: 1px solid rgba(255,255,255,0.2) !important;
+                    width: auto !important;
+                }
+                .register-link {
+                    text-decoration: none;
+                    width: auto !important;
+                }
+
+                @media (max-width: 768px) {
+                    .navbar-container {
+                        padding: 0.75rem 1rem;
+                        margin: 0.5rem;
+                    }
+                    .logo-text {
+                        display: none;
+                    }
+                    .user-name {
+                        display: none;
+                    }
+                    .navbar-actions {
+                        gap: 0.5rem;
+                    }
+                    .logout-text {
+                        display: none;
+                    }
+                    .logout-btn {
+                        padding: 0.5rem;
+                    }
+                }
+            `}</style>
         </nav>
     );
 };
+
 
 export default Navbar;

@@ -94,9 +94,9 @@ const SubmitComplaint = () => {
     };
 
     return (
-        <div style={{ maxWidth: '850px', margin: '2rem auto', padding: '0 1.5rem' }}>
+        <div className="submit-container">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
-                <button onClick={() => step === 2 ? setStep(1) : navigate(-1)} className="btn btn-outline" style={{ padding: '0.5rem 1rem' }}>
+                <button onClick={() => step === 2 ? setStep(1) : navigate(-1)} className="btn btn-outline" style={{ padding: '0.5rem 1rem', width: 'auto' }}>
                     <ArrowLeft size={18} />
                     {step === 2 ? 'Change Category' : 'Back'}
                 </button>
@@ -110,9 +110,31 @@ const SubmitComplaint = () => {
                 key={step}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="glass-morphism card"
-                style={{ padding: '2.5rem' }}
+                className="glass-morphism card submission-card"
             >
+                <style>{`
+                .submit-container {
+                    maxWidth: 850px;
+                    margin: 2rem auto;
+                    padding: 0 1.5rem 5rem;
+                }
+                .submission-card {
+                    padding: 2.5rem;
+                }
+                @media (max-width: 600px) {
+                    .submit-container {
+                        padding: 1rem;
+                        margin: 0;
+                    }
+                    .submission-card {
+                        padding: 1.5rem;
+                    }
+                    h1 {
+                        font-size: 1.5rem !important;
+                    }
+                }
+            `}</style>
+
                 <AnimatePresence mode="wait">
                     {step === 1 ? (
                         <motion.div

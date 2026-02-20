@@ -118,15 +118,15 @@ const ComplaintDetails = () => {
     const statusOrder = ['Open', 'Assigned', 'In Progress', 'Resolved', 'Closed'];
 
     return (
-        <div style={{ maxWidth: '1000px', margin: '2rem auto', padding: '0 1.5rem pb-5' }}>
+        <div className="details-container">
             <button onClick={() => navigate('/')} className="btn btn-outline" style={{ marginBottom: '2rem' }}>
                 <ArrowLeft size={18} />
                 Back to Dashboard
             </button>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem' }}>
+            <div className="details-grid">
                 {/* Left Column: Complaint Details */}
-                <div>
+                <div className="complaint-main">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -312,7 +312,7 @@ const ComplaintDetails = () => {
                 </div>
 
                 {/* Right Column: Actions (Admin/Staff) */}
-                <div>
+                <div className="complaint-actions">
                     {(user.role === 'Admin' || user.role === 'Support Staff') && (
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
@@ -435,6 +435,36 @@ const ComplaintDetails = () => {
                     )}
                 </div>
             </div>
+            <style>{`
+                .details-container {
+                    max-width: 1000px;
+                    margin: 2rem auto;
+                    padding: 0 1.5rem 5rem;
+                }
+                .details-grid {
+                    display: grid;
+                    grid-template-columns: 1.5fr 1fr;
+                    gap: 2rem;
+                }
+                @media (max-width: 900px) {
+                    .details-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    .complaint-actions {
+                        position: static !important;
+                    }
+                }
+                @media (max-width: 600px) {
+                    .details-container {
+                        padding: 1rem;
+                        margin: 0;
+                    }
+                    .btn-outline {
+                        width: 100%;
+                        margin-bottom: 1.5rem !important;
+                    }
+                }
+            `}</style>
         </div>
     );
 };

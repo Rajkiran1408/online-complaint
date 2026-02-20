@@ -198,3 +198,30 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    /* Stack buttons on mobile */
+  }
+
+  .input-group {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+}
