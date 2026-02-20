@@ -29,6 +29,7 @@ const ComplaintDetails = () => {
     const [activeTab, setActiveTab] = useState('details'); // 'details' or 'updates'
     const [resolutionImage, setResolutionImage] = useState(null);
     const [resolutionPreview, setResolutionPreview] = useState(null);
+    const [selectedImageUrl, setSelectedImageUrl] = useState(null);
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -151,7 +152,7 @@ const ComplaintDetails = () => {
                         {complaint.attachmentUrl && (
                             <div style={{ marginBottom: '2.5rem' }}>
                                 <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Attachment</h4>
-                                <a href={complaint.attachmentUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}
+                                <div onClick={() => setSelectedImageUrl(complaint.attachmentUrl)} style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'zoom-in' }}
                                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)'; }}
                                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
                                 >
@@ -161,9 +162,9 @@ const ComplaintDetails = () => {
                                         style={{ width: '100%', maxHeight: '350px', objectFit: 'contain', display: 'block', background: 'rgba(0,0,0,0.05)' }}
                                     />
                                     <div style={{ padding: '0.6rem 1rem', background: 'rgba(99, 102, 241, 0.08)', textAlign: 'center', fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 600 }}>
-                                        Click to view full size ↗
+                                        Click to view full size
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         )}
 
@@ -231,16 +232,16 @@ const ComplaintDetails = () => {
                                             {complaint.resolutionImageUrl && (
                                                 <div style={{ marginBottom: '2rem' }}>
                                                     <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Resolution Proof</h4>
-                                                    <a href={complaint.resolutionImageUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'pointer' }}>
+                                                    <div onClick={() => setSelectedImageUrl(complaint.resolutionImageUrl)} style={{ display: 'block', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--glass-border)', transition: 'transform 0.2s ease, box-shadow 0.2s ease', cursor: 'zoom-in' }}>
                                                         <img
                                                             src={complaint.resolutionImageUrl}
                                                             alt="Resolution Evidence"
                                                             style={{ width: '100%', maxHeight: '250px', objectFit: 'contain', display: 'block', background: 'rgba(0,0,0,0.05)' }}
                                                         />
                                                         <div style={{ padding: '0.5rem', background: 'rgba(34, 197, 94, 0.08)', textAlign: 'center', fontSize: '0.75rem', color: 'var(--success)', fontWeight: 600 }}>
-                                                            Staff uploaded this proof of resolution ↗
+                                                            Staff uploaded this proof of resolution (Click to view)
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 </div>
                                             )}
 
@@ -465,6 +466,64 @@ const ComplaintDetails = () => {
                     }
                 }
             `}</style>
+            <AnimatePresence>
+                {selectedImageUrl && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImageUrl(null)}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.95)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 9999,
+                            padding: '2rem',
+                            cursor: 'zoom-out'
+                        }}
+                    >
+                        <button
+                            onClick={() => setSelectedImageUrl(null)}
+                            style={{
+                                position: 'absolute',
+                                top: '2rem',
+                                right: '2rem',
+                                background: 'rgba(255,255,255,0.1)',
+                                border: 'none',
+                                color: 'white',
+                                padding: '1rem',
+                                borderRadius: '50%',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <X size={24} />
+                        </button>
+                        <motion.img
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            src={selectedImageUrl}
+                            alt="Full View"
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '90vh',
+                                objectFit: 'contain',
+                                borderRadius: '0.5rem',
+                                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                            }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
